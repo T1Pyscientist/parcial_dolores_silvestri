@@ -14,17 +14,16 @@ d3.dsv(";", "enero.csv", d3.autoType).then(data => {
     // Categorias por canal
     let plot1 = Plot.plot({
         marks: [
-            Plot.axisX({label: 'Canales', lineWidth: 10}),
             Plot.barY(data, 
                 Plot.groupX(
                     {y: 'count'}, 
-                    {x: 'canal', y: 'count'}
+                    {x: 'canal', y: 'count', fill: 'categoria'}
                 ),
             ),
         ],
 
-        y: {domain: [0, 10000]},
-        color: {legend: true},
+        y: { domain: [0, 10000] },
+        color: { legend: true },
 
     })
 
@@ -50,16 +49,11 @@ d3.dsv(";", "junio.csv", d3.autoType).then(data => {
     let plot1 = Plot.plot({
         marks: [
             Plot.axisX({label: 'Canales', lineWidth: 10}),
-            Plot.barY(data, 
-                Plot.groupX(
-                    {y: 'count'}, 
-                    {x: 'canal', y: 'count'}
-                ),
+            Plot.barY(data,
+                Plot.groupX({ y: 'count' }, { x: 'canal', y: 'count' }),
             ),
         ],
-
-        y: {domain: [0, 10000]},
-        color: {legend: true},
+        y: {domain: [0, 10000]}
 
     })
 
@@ -68,7 +62,7 @@ d3.dsv(";", "junio.csv", d3.autoType).then(data => {
 
 d3.dsv(";", "agosto.csv", d3.autoType).then(data => {
 
-    data = data.filter(d =>  d.categoria !== null);
+    data = data.filter(d => d.categoria !== null);
     data = data.map(d => {
         if (d.canal === "App Denuncia Vial"){
             d.canal = "App BA 147"
@@ -83,16 +77,11 @@ d3.dsv(";", "agosto.csv", d3.autoType).then(data => {
     let plot1 = Plot.plot({
         marks: [
             Plot.axisX({label: 'Canales', lineWidth: 10}),
-            Plot.barY(data, 
-                Plot.groupX(
-                    {y: 'count'}, 
-                    {x: 'canal', y: 'count'}
-                ),
+            Plot.barY(data,
+                Plot.groupX({ y: 'count' }, { x: 'canal', y: 'count' }),
             ),
         ],
-
-        y: {domain: [0, 10000]},
-        color: {legend: true},
+        y: {domain: [0, 10000]}
 
     })
 
