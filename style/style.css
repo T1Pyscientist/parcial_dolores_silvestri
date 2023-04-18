@@ -1,47 +1,42 @@
 /* General styling */
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
+#cuerpo {
+    font-family: "Nunito";
     background-color: #ffffff;
-    margin: 0;
-    padding: 0;
+    padding: 20%;
+    padding-top:0%;
 }
 
-div.container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1rem;
-    padding: 2rem;
-    align-items: center;
-    justify-items: center;
+header {
+    margin: 2%;
+    font-family: "Nunito";
 }
 
-div.row {
-    display: grid;
-    align-items: center;
-    justify-items: center;
+#cuerpo h1 {
+    font-size: 2.5rem;
+    text-align: left;
 }
 
-div.rowImg {
+#logo {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1.5rem;
-    align-items: center;
-    justify-items: center;
+    justify-content: center;
+    width: 10%;
+    background-color: #fdd306;
+    border-radius: 5px;
 }
 
-div.visualizaciones {
-    padding: 2rem;
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    grid-gap: 8rem;
+section {
+    margin-top: 3%;
 }
 
-iframe {
-    display: grid;
-    align-items: center;
-    justify-items: center;
+h3 {
+    font-family: "Nunito";
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+section p {
+    font-family: 'Open Sans';
 }
 
 a {

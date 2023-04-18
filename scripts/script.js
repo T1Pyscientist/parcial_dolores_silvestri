@@ -1,93 +1,51 @@
-d3.dsv(";", "data/enero.csv", d3.autoType).then(data => {
+d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
 
-    data = data.filter(d =>  d.categoria !== null);
-    data = data.map(d => {
-        if (d.canal === "App Denuncia Vial"){
-            d.canal = "App BA 147"
-        }
-        if (d.canal !== "App BA 147" && d.canal !== "GCS Web") {
-            d.canal = "Otros"
-        } 
-        return d;
-    })
-
-    // Categorias por canal
+    // Reportes por canal total
     let plot1 = Plot.plot({
         marks: [
             Plot.barY(data, 
                 Plot.groupX(
-                    {y: 'count'}, 
-                    {x: 'canal', y: 'count', fill: 'categoria'}
+                    {y: 'sum'}, 
+                    {x: 'Canal', y: 'Valor', sort: { x: 'y', reverse: true },}
                 ),
             ),
         ],
+        y: {
+            tickFormat: d => d / 1000 + " mil",
+            domain: [0, 300000],
+        },
+        inset: 20,
+    })
 
-        y: { domain: [0, 10000] },
-        color: { legend: true },
+    mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+    // Reportes por canal por mes
+    let plot2 = Plot.plot({
+        marks: [
+            Plot.line(
+                data,
+                {x: "Mes", y: "Valor", stroke: "Canal", curve: "monotone-x"}
+            )
+        ],
+        color: {legend: true},
+        x: {
+            label: "Mes", 
+            tickFormat: d => mes[d-1],
+            ticks: 11
+        },
+        y: {
+            label: "Cantidad de denuncias",
+            tickFormat: d => d / 1000 + " mil",
+        },
+
+
+        inset: 20,
 
     })
 
+    d3.select('#chart2').append(() => plot2)
     d3.select('#chart1').append(() => plot1)
 });
 
-d3.dsv(";", "data/junio.csv", d3.autoType).then(data => {
-
-    data = data.filter(d =>  d.categoria !== null)
-
-    data = data.filter(d =>  d.categoria !== null);
-    data = data.map(d => {
-        if (d.canal === "App Denuncia Vial"){
-            d.canal = "App BA 147"
-        }
-        if (d.canal !== "App BA 147" && d.canal !== "GCS Web") {
-            d.canal = "Otros"
-        } 
-        return d;
-    })
-
-    // Categorias por canal
-    let plot1 = Plot.plot({
-        marks: [
-            Plot.axisX({label: 'Canales', lineWidth: 10}),
-            Plot.barY(data,
-                Plot.groupX({ y: 'count' }, { x: 'canal', y: 'count' }),
-            ),
-        ],
-        y: {domain: [0, 10000]}
-
-    })
-
-    d3.select('#chart2').append(() => plot1)
-});
-
-d3.dsv(";", "data/agosto.csv", d3.autoType).then(data => {
-
-    data = data.filter(d => d.categoria !== null);
-    data = data.map(d => {
-        if (d.canal === "App Denuncia Vial"){
-            d.canal = "App BA 147"
-        }
-        if (d.canal !== "App BA 147" && d.canal !== "GCS Web") {
-            d.canal = "Otros"
-        } 
-        return d;
-    })
-
-    // Categorias por canal
-    let plot1 = Plot.plot({
-        marks: [
-            Plot.axisX({label: 'Canales', lineWidth: 10}),
-            Plot.barY(data,
-                Plot.groupX({ y: 'count' }, { x: 'canal', y: 'count' }),
-            ),
-        ],
-        y: {domain: [0, 10000]}
-
-    })
-
-    d3.select('#chart3').append(() => plot1)
-
-});
 
 const mapaFetch = d3.json('data/barrios-caba.geojson')
 const dataFetch = d3.dsv(';', 'data/enero.csv', d3.autoType)
@@ -189,37 +147,3 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
   /* Agregamos al DOM la visualización chartMap */
   d3.select('#mapa').append(() => chartMap)
 })
-
-
-d3.dsv(";", "data/enero.csv", d3.autoType).then(data => {
-    
-    data = data.filter(d =>  d.categoria !== null);
-    data = data.map(d => {
-        if (d.canal === "App Denuncia Vial"){
-            d.canal = "App BA 147"
-        }
-        if (d.canal !== "App BA 147" && d.canal !== "GCS Web") {
-            d.canal = "Otros"
-        } 
-        return d;
-    })
-
-    // Categorias por canal
-    let plot1 = Plot.plot({
-        marks: [
-            Plot.axisX({label: 'Canales', lineWidth: 10}),
-            Plot.barY(data, 
-                Plot.groupX(
-                    {y: 'count'}, 
-                    {x: 'canal', y: 'count', fill: d => d.categoria === "TRÁNSITO" } 
-                ),
-            ),
-        ],
-
-        y: {domain: [0, 10000]},
-        color: {legend: true},
-
-    })
-
-    d3.select('#chart1').append(() => plot1)
-});
