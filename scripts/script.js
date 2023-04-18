@@ -1,4 +1,4 @@
-d3.dsv(";", "enero.csv", d3.autoType).then(data => {
+d3.dsv(";", "data/enero.csv", d3.autoType).then(data => {
 
     data = data.filter(d =>  d.categoria !== null);
     data = data.map(d => {
@@ -30,7 +30,7 @@ d3.dsv(";", "enero.csv", d3.autoType).then(data => {
     d3.select('#chart1').append(() => plot1)
 });
 
-d3.dsv(";", "junio.csv", d3.autoType).then(data => {
+d3.dsv(";", "data/junio.csv", d3.autoType).then(data => {
 
     data = data.filter(d =>  d.categoria !== null)
 
@@ -60,7 +60,7 @@ d3.dsv(";", "junio.csv", d3.autoType).then(data => {
     d3.select('#chart2').append(() => plot1)
 });
 
-d3.dsv(";", "agosto.csv", d3.autoType).then(data => {
+d3.dsv(";", "data/agosto.csv", d3.autoType).then(data => {
 
     data = data.filter(d => d.categoria !== null);
     data = data.map(d => {
@@ -89,8 +89,8 @@ d3.dsv(";", "agosto.csv", d3.autoType).then(data => {
 
 });
 
-const mapaFetch = d3.json('barrios-caba.geojson')
-const dataFetch = d3.dsv(';', 'enero.csv', d3.autoType)
+const mapaFetch = d3.json('data/barrios-caba.geojson')
+const dataFetch = d3.dsv(';', 'data/enero.csv', d3.autoType)
 
 Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
   
@@ -191,7 +191,7 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
 })
 
 
-d3.dsv(";", "enero.csv", d3.autoType).then(data => {
+d3.dsv(";", "data/enero.csv", d3.autoType).then(data => {
     
     data = data.filter(d =>  d.categoria !== null);
     data = data.map(d => {
