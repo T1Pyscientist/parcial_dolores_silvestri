@@ -1,10 +1,10 @@
-/* General styling */
+/* General styling  */
 
 #cuerpo {
     font-family: "Nunito";
     background-color: #ffffff;
     padding: 20%;
-    padding-top:0%;
+    padding-top: 0%;
 }
 
 header {
@@ -42,12 +42,53 @@ section p {
 a {
     text-decoration: none;
     color: #ffffff;
-    border: #474747;
     border-radius: 10px;
-    background-color: #474747;
+    background-color: #333;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 8px;
     padding-bottom: 8px;
     font-family: "Exo";
+}
+
+button {
+    background: #333;
+    color: white;
+    font-family: 'Open Sans';
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-content: center;
+}
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 530px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://marcoguoli.com/wp-content/uploads/2020/04/foto-aerea-buenos-aires-Argentina-Guoli_19_15038C-1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.intro h1 {
+    font-family: 'Nunito';
+    font-size: 90px;
+    color: #fdd306;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.footer {
+    background-color: #302f49;
+    padding: 40px 80px;
 }

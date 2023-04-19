@@ -3,11 +3,8 @@ d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
     // Reportes por canal total
     let plot1 = Plot.plot({
         marks: [
-            Plot.barY(data, 
-                Plot.groupX(
-                    {y: 'sum'}, 
-                    {x: 'Canal', y: 'Valor', sort: { x: 'y', reverse: true },}
-                ),
+            Plot.barY(data,
+                Plot.groupX({ y: 'sum' }, { x: 'Canal', y: 'Valor', sort: { x: 'y', reverse: true }, }),
             ),
         ],
         y: {
@@ -15,21 +12,22 @@ d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
             domain: [0, 300000],
         },
         inset: 20,
+        marginLeft: 50,
+
     })
 
     mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-    // Reportes por canal por mes
+        // Reportes por canal por mes
     let plot2 = Plot.plot({
         marks: [
             Plot.line(
-                data,
-                {x: "Mes", y: "Valor", stroke: "Canal", curve: "monotone-x"}
+                data, { x: "Mes", y: "Valor", stroke: "Canal", curve: "monotone-x" }
             )
         ],
-        color: {legend: true},
+        color: { legend: true },
         x: {
-            label: "Mes", 
-            tickFormat: d => mes[d-1],
+            label: "Mes",
+            tickFormat: d => mes[d - 1],
             ticks: 11
         },
         y: {
@@ -39,7 +37,7 @@ d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
 
 
         inset: 20,
-
+        width: 800,
     })
 
     d3.select('#chart1').append(() => plot1)
@@ -57,11 +55,11 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
 
         projection: {
             type: 'mercator',
-            domain: barrios, 
+            domain: barrios,
         },
         color: {
-            type: 'quantize', 
-            n:5,
+            type: 'quantize',
+            n: 5,
             scheme: 'ylorbr',
             label: 'Cantidad de denuncias',
             legend: true,
@@ -71,15 +69,15 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
                 fill: d => {
                     let nombreBarrio = d.properties.BARRIO
                     let denunciasBarrio = data.filter(d => d.Barrio == nombreBarrio)[0]
-                    let cantReclamos = denunciasBarrio.Agosto - denunciasBarrio.Julio 
+                    let cantReclamos = denunciasBarrio.Agosto - denunciasBarrio.Julio
                     return cantReclamos
                 },
                 stroke: '#777777',
             }),
         ],
         width: 350
-        
-    })    
+
+    })
 
 
     /* Agregamos al DOM la visualización chartMap */
