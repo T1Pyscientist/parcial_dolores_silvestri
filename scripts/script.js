@@ -4,7 +4,7 @@ d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
     let plot1 = Plot.plot({
         marks: [
             Plot.barY(data,
-                Plot.groupX({ y: 'sum' }, { x: 'Canal', y: 'Valor', sort: { x: 'y', reverse: true }, }),
+                Plot.groupX({ y: 'sum' }, { x: 'Canal', y: 'Valor', sort: { x: 'y', reverse: true }, fill: (d) => (d.Canal == "App" ? "#fdd306" : "#838996") }),
             ),
         ],
         y: {
@@ -13,6 +13,7 @@ d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
         },
         inset: 20,
         marginLeft: 50,
+
 
     })
 
@@ -60,9 +61,11 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
         color: {
             type: 'quantize',
             n: 5,
-            scheme: 'ylorbr',
             label: 'Cantidad de denuncias',
             legend: true,
+            // scheme: 'redgrey',
+            range: ["#f3f2f3", "#d0cecf", "#a29da0", "#8b8589", "#fdd306"],
+            interpolate: "hcl"
         },
         marks: [
             Plot.geo(barrios, {
@@ -78,7 +81,6 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
         width: 350
 
     })
-
 
     /* Agregamos al DOM la visualización chartMap */
     d3.select('#mapa1').append(() => chartMap)
