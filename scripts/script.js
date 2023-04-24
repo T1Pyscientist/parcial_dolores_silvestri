@@ -4,51 +4,102 @@ d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
     let plot1 = Plot.plot({
         marks: [
             Plot.barY(data,
-                Plot.groupX({ y: 'sum' }, { x: 'Canal', y: 'Valor', sort: { x: 'y', reverse: true }, fill: (d) => (d.Canal == "App" ? "#fdd306" : "#838996") }),
+                Plot.groupX(
+                    { y: 'sum' }, 
+                    { 
+                        x: 'Canal', 
+                        y: 'Valor', 
+                        sort: { x: 'y', reverse: true }, 
+                        fill: (d) => (d.Canal == "App" ? "#fdd306" : "#cfcfcf") 
+                    }
+                ),
             ),
         ],
         y: {
             tickFormat: d => d / 1000 + " mil",
-            domain: [0, 300000],
+            ticks: 10,
+            domain: [0, 290000],
+            grid: true
         },
+
         inset: 20,
         marginLeft: 50,
+        height: 450,
 
-
-    })
-
-    mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-        // Reportes por canal por mes
-    let plot2 = Plot.plot({
-        marks: [
-            Plot.line(
-                data, { x: "Mes", y: "Valor", stroke: "Canal", curve: "monotone-x" }
-            )
-        ],
-        color: { legend: true },
-        x: {
-            label: "Mes",
-            tickFormat: d => mes[d - 1],
-            ticks: 11
-        },
-        y: {
-            label: "Cantidad de denuncias",
-            tickFormat: d => d / 1000 + " mil",
-        },
-
-
-        inset: 20,
-        width: 800,
     })
 
     d3.select('#chart1').append(() => plot1)
+});
+
+d3.dsv(",", "data/denuncias_por_categoria.csv", d3.autoType).then(data => {
+
+
+    data_proc = [];
+
+    for (let i = 0; i < 30; i++) {
+        for (let j = 0; j < 30; j++) {
+            data_proc.push({x: i, y: j, Categoria: Math.floor(j/25)});
+        }
+    }
+
+    data.sort((a, b) => b.Reportes - a.Reportes);
+
+    // data.forEach(d => {
+    //     let cat = d.Categoria;
+    //     let valor = d.Reportes;
+    //     if (valor > 6000) {
+
+    //         for (let i = 0; i < Math.floor(valor/1000); i++) {
+    //             data_proc.push({ Categoria: cat });
+    //         }
+    //     }
+    // });
+
+    // Reportes por canal total
+    let plot2 = Plot.plot({
+        marks: [
+            // Plot.cell(
+            //     data_proc,
+            //     Plot.stackX({
+            //       y: (_, i) => i % 12,
+            //       fill: d => {
+            //         if (d.Categoria == "TRÁNSITO") {
+            //             return "Tránsito"
+            //         } else if (d.Categoria == "LIMPIEZA Y RECOLECCIÓN") {
+            //             return "Limpieza"
+            //         } else {
+            //             return "Otros"
+            //         }
+            //       }
+            //     })
+            // ),
+            Plot.dot(data_proc, {
+                x: 'x',
+                y: 'y',
+                fill: d => d.Categoria
+            })
+
+        ],
+        x: { axis: null },
+        y: { axis: null },
+
+        inset: 20,
+        width: 450,
+        height: 450,
+        color: {
+            range: ["#8b8589","#fdd306",  "#d0cecf"],
+            // scheme: 'pastel1',
+            legend: true,
+            reverse: true,
+        },
+    })
+
     d3.select('#chart2').append(() => plot2)
 
 });
 
-
 const mapaFetch = d3.json('data/barrios-caba.geojson')
-const dataFetch = d3.dsv(',', 'data/denuncias_por_barrio1.csv', d3.autoType)
+const dataFetch = d3.dsv(',', 'data/denuncias_por_barrio.csv', d3.autoType)
 
 Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
 
