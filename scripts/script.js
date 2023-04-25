@@ -10,7 +10,7 @@ d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
                         x: 'Canal', 
                         y: 'Valor', 
                         sort: { x: 'y', reverse: true }, 
-                        fill: (d) => (d.Canal == "App" ? "#fdd306" : "#cfcfcf") 
+                        fill: (d) => (d.Canal == "App" ? "#fdd306" : "#cccaba") 
                     }
                 ),
             ),
@@ -236,8 +236,27 @@ $(document).ready(function(){
      
       // Add the possibility to remove the class if the elements are not visible
       repeat: false,
-     
-      // Callback to do after a class was added to an element. Action will return "add" or "remove", depending if the class was added or removed
-      callbackFunction: function(elem, action){}
       });
+    
+      $('#chart1').viewportChecker({
+        // Class to add to the elements when they are visible
+        classToAdd: 'visible',
+       
+        // The offset of the elements (let them appear earlier or later)
+        offset: 100,
+       
+        // Add the possibility to remove the class if the elements are not visible
+        repeat: false,
     });
+
+    $('#chart2').viewportChecker({
+        // Class to add to the elements when they are visible
+        classToAdd: 'visible',
+        
+        // The offset of the elements (let them appear earlier or later)
+        offset: 100,
+        
+        // Add the possibility to remove the class if the elements are not visible
+        repeat: false,
+    });
+});
