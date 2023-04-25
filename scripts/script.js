@@ -37,6 +37,7 @@ const dataFetch = d3.dsv(',', 'data/denuncias_por_barrio.csv', d3.autoType)
 
 Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
 
+
     let chartMap = Plot.plot({
 
         projection: {
@@ -45,10 +46,9 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
         },
         color: {
             type: 'quantize',
-            n: 5,
-            label: 'Cantidad de denuncias',
+            n: 6,
+            label: 'Denuncias',
             legend: true,
-            // scheme: 'redgrey',
             range: ["#f3f2f3", "#d0cecf", "#a29da0", "#8b8589", "#fdd306"],
             interpolate: "hcl"
         },
@@ -56,12 +56,11 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
             Plot.geo(barrios, {
                 fill: d => {
                     let nombreBarrio = d.properties.BARRIO
-                    let denunciasBarrio = data.filter(d => d.Barrio == nombreBarrio)[0]
-                    let cantReclamos = denunciasBarrio.Agosto - denunciasBarrio.Julio
-                    return cantReclamos
+                    let denunciasBarrio = data.filter(d => d.Barrio == nombreBarrio)[0].Reportes
+                    return denunciasBarrio
                 },
                 stroke: '#777777',
-            }),
+            }), 
         ],
         width: 350
 
@@ -79,7 +78,6 @@ d3.json("data/categorias.json").then(data => {
         value: d => d.size, // size of each node (file); null for internal nodes (folders)
         label: d => d.name.split(' ')[0], // display name for each cell
         title: (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}\n${n.value.toLocaleString("en")}`, // hover text
-        // color: ["#fdd306", "#f3f2f3", "#d0cecf"],
         color: d3.interpolate("#fff3b8","#fdd306"),
         width: 450,
         height: 450,
