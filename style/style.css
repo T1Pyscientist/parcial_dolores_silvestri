@@ -144,30 +144,3 @@ body {
     font-size: 15px;
     color: #ffffff;
 }
-
-button {
-    background: #333;
-    color: white;
-    font-family: 'Open Sans';
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    justify-content: center;
-}
-
-body {
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.footer {
-    background-color: #302f49;
-    padding: 40px 80px;
-}
-
-.footer p {
-    text-align: left;
-    font-family: "Arial";
-    font-size: 15px;
-    color: #ffffff;
-}
