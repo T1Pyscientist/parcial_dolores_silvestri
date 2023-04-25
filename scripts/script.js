@@ -1,4 +1,3 @@
-
 d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
 
     // Reportes por canal total
@@ -58,14 +57,26 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
             type: 'mercator',
             domain: barrios,
         },
+        // CAMBIE EL COLOR PARA QUE SE VEA MEJOR QUE LAS DENUNCIAS ESTAN 
+        // REPARTIDAS. CON LA OTRA ESCALA PARECE QUE EN ALGUNOS BARRIOS SE 
+        // USA NOMAS LA APP Y EN OTROS NO
         color: {
             type: 'quantize',
-            n: 6,
-            label: 'Denuncias',
+            n: 4,
+            label: 'Reportes por barrio',
             legend: true,
-            range: ["#f3f2f3", "#d0cecf", "#a29da0", "#8b8589", "#fdd306"],
-            interpolate: "hcl"
+            reverse: true,
+            // range: ["#f3f2f3", "#d0cecf", "#a29da0", "#8b8589", "#fdd306"],
+            interpolate: d3.interpolate("#fdd306","#fff5c7"),
+            width: 300,
+            tickFormat: d => d / 1000 + "k",
+            style: {
+                fontFamily: "Nunito",
+                fontSize: "16px",
+                marginBottom: 20,
+            },
         },
+
         marks: [
             Plot.geo(barrios, {
                 fill: d => {
@@ -73,12 +84,19 @@ Promise.all([mapaFetch, dataFetch]).then(([barrios, data]) => {
                     let denunciasBarrio = data.filter(d => d.Barrio == nombreBarrio)[0].Reportes
                     return denunciasBarrio
                 },
+                title: d => {
+                    let nombre = d.properties.BARRIO
+                    let denunciasBarrio = data.filter(d => d.Barrio == nombre)[0].Reportes
+                    return `${nombre}: ${denunciasBarrio}`
+                },
                 stroke: '#777777',
             }), 
         ],
-        width: 350
 
+        width: 350,
+        marginLeft: 0
     })
+
 
     /* Agregamos al DOM la visualización chartMap */
     d3.select('#mapa1').append(() => chartMap)
@@ -205,4 +223,4 @@ function Sunburst(data, { // data is either tabular (array of objects) or hierar
         .text(d => title(d.data, d));
   
     return svg.node();
-  }
+}
