@@ -15,16 +15,30 @@ d3.dsv(",", "data/denuncias_por_mes.csv", d3.autoType).then(data => {
                     }
                 ),
             ),
+            Plot.axisX({
+                fontSize: 14, 
+                fontWeight: 'bold', 
+                label: "",
+                dy: 10,
+                color: '#333333',
+            }),
         ],
         y: {
             tickFormat: d => d / 1000 + " mil",
-            ticks: 10,
+            ticks: 5,
             domain: [0, 290000],
-            grid: true
+            grid: true,
+            label: '↑ Reportes',
         },
 
-        inset: 20,
-        marginLeft: 50,
+        style: {
+            fontFamily: "Nunito",
+            fontSize: 12,
+        },
+ 
+
+        margin: 50,
+        marginTop: 20,
         height: 450,
 
     })
